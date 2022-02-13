@@ -2,7 +2,7 @@
 
 ## Instructions to run
 * Clone the repo
-git clone https://github.com/hardik5k/Retina.git
+git clone https://github.com/agastyathoppur/Retina.git
 
 * Move blink.sh file to /etc/profile.d
 sudo mv blink.sh /etc/profile.d
