@@ -1,0 +1,169 @@
+<html>
+
+<head>
+    <title>Retina</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="charts.js"></script>
+
+</head>
+
+<body>
+    <span style="display: flex; justify-content: center; align-items: center; width: fit-content;">
+        <div class="eye">
+            <div class="eyeball"></div>
+        </div>
+        <h1 style = "font-size: 2vw;">Retina</h1>
+        <a style = "position: absolute; right: 5%; cursor: pointer;"><u>Report to your Doctor</u></a>
+    </span>
+
+    <h1 class="heading">Eye State : <span style="color: #A8E4A0;">Healthy</span></h1>
+    <div class="data">
+        <h2 class="item">Blink rate : 13</h2>
+        <h2 class="item">Dryness levels : 0.2</h2>
+        <h2 class="item">Screen time : 4.6 hrs</h2>
+    </div>
+    </div>
+    <div class="togglebutton previous" id="previous">&larr;</div>
+    <div class="togglebutton next" id="next">&rarr;</div>
+    <div class="graph"></div>
+    <div class="calender">
+        <div class="togglebutton" id=1>Show Daily Data</div>
+        <div class="togglebutton" id=2>Show Total Activity</div>
+    </div>
+
+
+
+
+
+
+
+
+    <script>
+        window.Apex = {
+            chart: {
+                foreColor: 'wheat',
+                toolbar: {
+                    show: false
+                },
+            },
+            stroke: {
+                width: 3
+            },
+            tooltip: {
+                theme: 'dark'
+            }
+        };
+        var lineGraph = {
+            chart: {
+                height: 370,
+                type: 'line',
+                zoom: {
+                    enabled: false
+                },
+                dropShadow: {
+                    enabled: true,
+                    top: 3,
+                    left: 2,
+                    blur: 4,
+                    opacity: 1,
+                }
+            },
+            series: [{
+                name: "Blink Rate",
+                data: []
+            }],
+            noData: {
+                text: 'Data not available'
+            },
+            markers: {
+                size: 6,
+                strokeWidth: 0,
+                hover: {
+                    size: 9
+                }
+            },
+            labels: [],
+            xaxis: {
+                tooltip: {
+                    enabled: false
+                }
+            },
+            annotations: {
+                yaxis: [{
+                    y: 8,
+                    y2: 22,
+                    borderColor: '#000',
+                    fillColor: '#3B7A57',
+                }]
+            }
+        }
+
+        var chart = new ApexCharts(document.querySelector('.graph'), lineGraph);
+
+        const currentDate = new Date()
+        const presentDate = new Date()
+        let blinkData = []
+
+        var prev = document.querySelector('#previous')
+        prev.addEventListener('click', () => {
+            currentDate.setDate(currentDate.getDate() - 1)
+            const datestring = currentDate.toISOString().slice(0, 10)
+            const currentData = blinkData[datestring]
+            if (currentData === undefined) {
+                alert("No data found")
+                currentDate.setDate(currentDate.getDate() + 1)
+            } else {
+                chart.updateSeries([{
+                    name: "Blink Rate",
+                    data: Object.values(currentData).map((item) => item[0])
+                }])
+            }
+
+        })
+        var next = document.querySelector('#next')
+        next.addEventListener('click', () => {
+            currentDate.setDate(currentDate.getDate() + 1)
+            const datestring = currentDate.toISOString().slice(0, 10)
+            const currentData = blinkData[datestring]
+            if (currentData === undefined) {
+                alert("No data found")
+                currentDate.setDate(currentDate.getDate() - 1)
+            } else {
+                chart.updateSeries([{
+                    name: "Blink Rate",
+                    data: Object.values(currentData).map((item) => item[0])
+                }])
+            }
+        })
+
+        function setData(currentData, x) {
+            let data = Object.values(currentData).map((item) => item[0])
+            let xlabel = Object.keys(currentData)
+            chart.render();
+            chart.updateSeries([{
+                name: "Blink Rate",
+                data: data
+            }])
+            chart.updateOptions({
+                labels: xlabel
+            })
+        }
+        async function getData() {
+            const url = `http://localhost:5000/`;
+            const response = await fetch(url);
+            const data = await response.json();
+            blinkData = data
+            console.log(blinkData)
+            const datestring = presentDate.toISOString().slice(0, 10)
+            console.log(datestring)
+            const currentData = blinkData[datestring]
+            if (currentData === undefined) {
+                alert("No data found")
+            } else setData(currentData, 0)
+        }
+        getData()
+    </script>
+</body>
+
+</html>

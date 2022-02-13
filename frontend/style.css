@@ -1,0 +1,93 @@
+body {
+    background: #282C35;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: wheat;
+}
+
+.eye {
+    background: white;
+    width: 50px;
+    height: 50px;
+    transform: rotate(45deg);
+    border-radius: 80% 0;
+    margin: 0 3vw;
+    border: 5px solid wheat;
+}
+
+.eyeball {
+    width: 20%;
+    height: 20%;
+    background: #222f3e;
+    border-radius: 50%;
+    border: 10px solid #16161d;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.heading {
+    text-align: center;
+    margin-top: 2%;
+    font-size: 6vw;
+}
+
+.data {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: -3%;
+    width: 100%;
+}
+
+.item {
+    font-size: 2vw;
+    margin: 0 3rem;
+}
+
+.graph {
+    max-width: 700px;
+    width: 70vw;
+    margin: 35px auto;
+}
+
+.togglebutton {
+    border: .1rem solid black;
+    margin: 0 3rem;
+    color: white;
+    padding: 0.8rem;
+    background-color: black;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: wheat;
+}
+
+.togglebutton:hover {
+    transform: scale(1.1);
+    border-color: wheat;
+    box-shadow: 0 0 1rem wheat;
+}
+
+.calender {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+    color: #36454f;
+}
+
+.previous {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+}
+
+.next {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+}
+
+.eyelid {}
