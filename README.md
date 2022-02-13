@@ -16,5 +16,12 @@ sudo mv blink.sh /etc/profile.d
 
 (Make sure that that everything is extracted/cloned in ~/Desktop/Retina).
 
+## Technologies used
+* Mongodb
+* Node + Express
+* Open cv
+* dlib
+* Scipy
+
 ## Tracks
 Healtcare, Task automation
